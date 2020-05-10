@@ -1,5 +1,15 @@
 version: '3.4'
 services:
+
+  portainer:
+      image: portainer/portainer
+      container_name: ws-portainer
+      restart: always
+      ports:
+          - 9095:9000
+      volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+ 
   jira:
     image: cptactionhank/atlassian-jira:8.5.2
     restart: always
