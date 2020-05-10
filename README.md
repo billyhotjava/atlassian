@@ -60,7 +60,7 @@ How to use:
 
 
     ```
-    $ git clone https://github.com/omidraha/atlassian
+    $  https://github.com/billyhotjava/atlassian.git
     ```
 
 2. Set environment variables:
