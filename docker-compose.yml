@@ -38,7 +38,7 @@ services:
     container_name: postgres
     restart: always
     volumes:
-      - postgresqldata:/var/lib/postgresql/data
+      - database-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=confluencedb
       - POSTGRES_PASSWORD=verybigsecretrootpassword
