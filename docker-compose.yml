@@ -11,7 +11,7 @@ services:
           - /var/run/docker.sock:/var/run/docker.sock
  
   jira:
-    image: cptactionhank/atlassian-jira:8.5.2
+    image: atlassian/jira-software:latest
     restart: always
     links:
       - database
@@ -19,7 +19,7 @@ services:
       - jira-data:/var/atlassian/jira
 
   confluence:
-    image: cptactionhank/atlassian-confluence:6.15.10
+    image: atlassian/confluence-server:latest
     restart: always
     links:
       - database
@@ -27,7 +27,7 @@ services:
       - confluence-data:/var/atlassian/confluence
 
   bitbucket:
-    image: atlassian/bitbucket-server:6.7.5
+    image: atlassian/bitbucket-server:latest
     restart: always
     links:
       - database
