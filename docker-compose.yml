@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   jira:
-    image: cptactionhank/atlassian-jira:7.9.2
+    image: cptactionhank/atlassian-jira:8.5.2
     restart: always
     links:
       - database
@@ -9,7 +9,7 @@ services:
       - jira-data:/var/atlassian/jira
 
   confluence:
-    image: cptactionhank/atlassian-confluence:6.9.0
+    image: cptactionhank/atlassian-confluence:6.15.10
     restart: always
     links:
       - database
@@ -17,18 +17,22 @@ services:
       - confluence-data:/var/atlassian/confluence
 
   bitbucket:
-    image: atlassian/bitbucket-server:5.10.1
+    image: atlassian/bitbucket-server:6.7.5
     restart: always
     links:
       - database
     volumes:
       - bitbucket-data:/var/atlassian/application-data/bitbucket
-
   database:
-    image: postgres:9.4
+    image: postgres:11
+    container_name: postgres
     restart: always
     volumes:
-      - database-data:/var/lib/postgresql/data
+      - postgresqldata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=confluencedb
+      - POSTGRES_PASSWORD=verybigsecretrootpassword
+      - POSTGRES_DB=confluencedb
   nginx:
     image: nginx
     restart: always
