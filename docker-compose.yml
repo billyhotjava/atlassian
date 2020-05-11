@@ -1,6 +1,5 @@
 version: '3.4'
 services:
-
   portainer:
       image: portainer/portainer
       container_name: ws-portainer
@@ -38,7 +37,7 @@ services:
     container_name: postgres
     restart: always
     volumes:
-      - database-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=confluencedb
       - POSTGRES_PASSWORD=verybigsecretrootpassword
@@ -59,5 +58,5 @@ services:
 volumes:
   jira-data:
   confluence-data:
-  bitbucket-data:
-  database-data:
+#  bitbucket-data:
+  db-data:
