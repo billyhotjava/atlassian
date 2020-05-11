@@ -51,7 +51,6 @@ services:
     links:
       - jira
       - confluence
-      - bitbucket
     volumes:
     - ./:/src
     command: ./src/scripts/run_nginx.sh
