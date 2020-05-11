@@ -34,7 +34,7 @@ services:
   #   volumes:
   #     - bitbucket-data:/var/atlassian/application-data/bitbucket
   database:
-    image: postgres:latest
+    image: postgres:12.2
     container_name: postgres
     restart: always
     volumes:
