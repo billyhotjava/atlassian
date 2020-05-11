@@ -26,13 +26,13 @@ services:
     volumes:
       - confluence-data:/var/atlassian/confluence
 
-  bitbucket:
-    image: atlassian/bitbucket-server:latest
-    restart: always
-    links:
-      - database
-    volumes:
-      - bitbucket-data:/var/atlassian/application-data/bitbucket
+  # bitbucket:
+  #   image: atlassian/bitbucket-server:latest
+  #   restart: always
+  #   links:
+  #     - database
+  #   volumes:
+  #     - bitbucket-data:/var/atlassian/application-data/bitbucket
   database:
     image: postgres:11
     container_name: postgres
