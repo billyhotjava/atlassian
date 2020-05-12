@@ -82,3 +82,4 @@ volumes:
   confluence-data:
 #  bitbucket-data:
   db-data:
+  jenkins-data:
