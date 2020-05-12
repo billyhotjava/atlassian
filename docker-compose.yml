@@ -65,6 +65,7 @@ services:
       image: jenkinsci/blueocean
       container_name: myjenkins
       restart: always
+      user: root
       ports:
           - 50000:50000
           - 9080:8080
