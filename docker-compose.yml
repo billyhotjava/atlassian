@@ -63,17 +63,17 @@ services:
     - DOMAIN
 
  ##### jenkins && jfog 
-  myjenkins:
-      image: jenkinsci/blueocean
-      container_name: myjenkins
-      restart: always
-      user: root
-      ports:
-          - 50000:50000
-          - 9080:8080
-      volumes:
-          - /var/run/docker.sock:/var/run/docker.sock   
-          - jenkins-data:/var/jenkins_home 
+  # myjenkins:
+  #     image: jenkinsci/blueocean
+  #     container_name: myjenkins
+  #     restart: always
+  #     user: root
+  #     ports:
+  #         - 50000:50000
+  #         - 9080:8080
+  #     volumes:
+  #         - /var/run/docker.sock:/var/run/docker.sock   
+  #         - jenkins-data:/var/jenkins_home 
    
   # myjfrog:
   #     image: docker.bintray.io/jfrog/artifactory-oss
