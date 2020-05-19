@@ -8,7 +8,9 @@ services:
           - 9095:9000
       volumes:
           - /var/run/docker.sock:/var/run/docker.sock
- 
+  networks:
+    - atlassian
+
   jira:
     image: atlassian/jira-software:latest
     restart: always
@@ -18,6 +20,8 @@ services:
       - database
     volumes:
       - jira-data:/var/atlassian/jira
+  networks:
+    - atlassian
 
   confluence:
     image: atlassian/confluence-server:latest
@@ -28,6 +32,8 @@ services:
       - database
     volumes:
       - confluence-data:/var/atlassian/confluence
+  networks:
+    - atlassian
 
   # bitbucket:
   #   image: atlassian/bitbucket-server:latest
@@ -60,8 +66,9 @@ services:
     - ./:/src
     command: ./src/scripts/run_nginx.sh
     environment:
-    - DOMAIN
-
+      - DOMAIN
+    networks:
+    - atlassian
  ##### jenkins && jfog 
   # myjenkins:
   #     image: jenkinsci/blueocean
@@ -90,3 +97,6 @@ volumes:
 #  bitbucket-data:
   db-data:
 #  jenkins-data:
+networks:
+    atlassian:
+        driver: bridge
