@@ -1,15 +1,15 @@
 version: '3.4'
 services:
   portainer:
-      image: portainer/portainer
-      container_name: ws-portainer
-      restart: always
-      ports:
-          - 9095:9000
-      volumes:
-          - /var/run/docker.sock:/var/run/docker.sock
-  networks:
-    - atlassian
+    image: portainer/portainer
+    container_name: ws-portainer
+    restart: always
+    ports:
+        - 9095:9000
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - atlassian
 
   jira:
     image: atlassian/jira-software:latest
@@ -20,8 +20,8 @@ services:
       - database
     volumes:
       - jira-data:/var/atlassian/jira
-  networks:
-    - atlassian
+    networks:
+      - atlassian
 
   confluence:
     image: atlassian/confluence-server:latest
@@ -32,8 +32,8 @@ services:
       - database
     volumes:
       - confluence-data:/var/atlassian/confluence
-  networks:
-    - atlassian
+    networks:
+      - atlassian
 
   # bitbucket:
   #   image: atlassian/bitbucket-server:latest
@@ -54,6 +54,9 @@ services:
       - POSTGRES_USER=confluencedb
       - POSTGRES_PASSWORD=verybigsecretrootpassword
       - POSTGRES_DB=confluencedb
+    networks:
+      - atlassian
+
   nginx:
     image: nginx
     restart: always
