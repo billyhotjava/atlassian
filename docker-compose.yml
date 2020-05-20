@@ -15,7 +15,7 @@ services:
     image: atlassian/jira-software:latest
     restart: always
     ports:
-        - 8080:8080
+        - 8089:8080
     links:
       - database
     volumes:
