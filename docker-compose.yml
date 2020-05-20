@@ -18,8 +18,14 @@ services:
         - 8089:8080
     depends_on:
       - database
+    #volumes:
+    #  - jira-data:/var/atlassian/jira
     volumes:
-      - jira-data:/var/atlassian/jira
+      - type: volume
+        source: /app/docker/volumes/atlassian_jira-data
+        target:/var/atlassian/jira 
+        volume:
+          nocopy: true
     networks:
       - atlassian
 
