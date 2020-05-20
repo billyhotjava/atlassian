@@ -23,7 +23,7 @@ services:
     volumes:
       - type: volume
         source: /app/docker/volumes/atlassian_jira-data
-        target:/var/atlassian/jira 
+        target: /var/atlassian/jira 
         volume:
           nocopy: true
     networks:
