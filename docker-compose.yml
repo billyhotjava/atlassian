@@ -24,8 +24,6 @@ services:
       - type: volume
         source: jira-data
         target: /var/atlassian/jira 
-        volume:
-          nocopy: true
     networks:
       - atlassian
 
