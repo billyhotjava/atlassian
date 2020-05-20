@@ -16,6 +16,8 @@ services:
     restart: always
     ports:
         - 8089:8080
+    depends_on:
+      - database
     volumes:
       - jira-data:/var/atlassian/jira
     networks:
@@ -26,6 +28,8 @@ services:
     restart: always
     ports:
         - 8090:8090
+    depends_on:
+      - database
     volumes:
       - confluence-data:/var/atlassian/confluence
     networks:
