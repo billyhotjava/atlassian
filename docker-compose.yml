@@ -16,8 +16,6 @@ services:
     restart: always
     ports:
         - 8089:8080
-    links:
-      - database
     volumes:
       - jira-data:/var/atlassian/jira
     networks:
@@ -28,8 +26,6 @@ services:
     restart: always
     ports:
         - 8090:8090
-    links:
-      - database
     volumes:
       - confluence-data:/var/atlassian/confluence
     networks:
@@ -55,9 +51,6 @@ services:
   #   restart: always
   #   ports:
   #     - "80:80"
-  #   links:
-  #     - jira
-  #     - confluence
   #   volumes:
   #   - ./:/src
   #   command: ./src/scripts/run_nginx.sh
