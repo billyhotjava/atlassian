@@ -50,21 +50,21 @@ services:
     networks:
       - atlassian
 
-  nginx:
-    image: nginx
-    restart: always
-    ports:
-      - "80:80"
-    links:
-      - jira
-      - confluence
-    volumes:
-    - ./:/src
-    command: ./src/scripts/run_nginx.sh
-    environment:
-      - DOMAIN
-    networks:
-    - atlassian
+  # nginx:
+  #   image: nginx
+  #   restart: always
+  #   ports:
+  #     - "80:80"
+  #   links:
+  #     - jira
+  #     - confluence
+  #   volumes:
+  #   - ./:/src
+  #   command: ./src/scripts/run_nginx.sh
+  #   environment:
+  #     - DOMAIN
+  #   networks:
+  #   - atlassian
 
 volumes:
   jira-data:
