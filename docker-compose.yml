@@ -1,8 +1,8 @@
-version: '3.4'
+version: '3.8'
 services:
   portainer:
-    image: portainer/portainer
-    container_name: ws-portainer
+    image: portainer/portainer:latest
+    container_name: devops-portainer
     restart: always
     ports:
         - 9095:9000
@@ -11,27 +11,37 @@ services:
     networks:
       - atlassian
 
-  jira:
-    image: atlassian/jira-software:latest
-    restart: always
-    ports:
-        - 8089:8080
-    depends_on:
-      - database
-    volumes:
-      - jira-data:/var/atlassian/jira
-    networks:
-      - atlassian
+  # jira:
+  #   image: atlassian/jira-software:latest
+  #   restart: always
+  #   ports:
+  #       - 8089:8080
+  #   depends_on:
+  #     - database
+  #   volumes:
+  #     - jira-data:/var/atlassian/jira
+  #   networks:
+  #     - atlassian
 
   confluence:
-    image: atlassian/confluence-server:latest
+    build:
+      context: confluence/
     restart: always
     ports:
         - 8090:8090
     depends_on:
       - database
     volumes:
-      - confluence-data:/var/atlassian/confluence
+      #- confluence-data:/var/atlassian/confluence
+      - type: bind
+        source: ./confluence/config/server.xml
+        target: /opt/atlassian/confluence/conf/server.xml
+        read_only: true
+      - type: volume
+        source: confluence-data
+        target: /var/atlassian/application-data/confluence
+    # environment: 
+    #   - 
     networks:
       - atlassian
 
@@ -64,7 +74,7 @@ services:
   #   - atlassian
 
 volumes:
-  jira-data:
+  #jira-data:
   confluence-data:
   db-data:
 networks:
