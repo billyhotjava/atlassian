@@ -31,11 +31,16 @@ services:
         - 8090:8090
     depends_on:
       - database
+    user: confluence
     volumes:
       #- confluence-data:/var/atlassian/confluence
       - type: bind
         source: ./confluence/config/server.xml
         target: /opt/atlassian/confluence/conf/server.xml
+        read_only: true
+      - type: bind
+        source: ./confluence/config/web.xml
+        target: /opt/atlassian/confluence/conf/web.xml
         read_only: true
       - type: volume
         source: confluence-data
