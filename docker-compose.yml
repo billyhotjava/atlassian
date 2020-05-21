@@ -40,8 +40,8 @@ services:
         target: /opt/atlassian/confluence/conf/server.xml
         read_only: true
       - type: bind
-        source: ./confluence/config/keystore
-        target: /var/atlassian/application-data/confluence/keystore
+        source: ./confluence/config/.keystore
+        target: /var/atlassian/application-data/confluence/.keystore
         read_only: true
       - type: bind
         source: ./confluence/config/web.xml
