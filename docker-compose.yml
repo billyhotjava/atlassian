@@ -29,6 +29,7 @@ services:
     restart: always
     ports:
         - 8090:8090
+        - 8443:8443
     depends_on:
       - database
     user: confluence
@@ -37,6 +38,10 @@ services:
       - type: bind
         source: ./confluence/config/server.xml
         target: /opt/atlassian/confluence/conf/server.xml
+        read_only: true
+      - type: bind
+        source: ./confluence/config/keystore
+        target: /var/atlassian/application-data/confluence/keystore
         read_only: true
       - type: bind
         source: ./confluence/config/web.xml

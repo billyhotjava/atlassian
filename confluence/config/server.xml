@@ -24,13 +24,17 @@
                scheme="http"
                proxyName=""
                proxyPort=""
-
                relaxedPathChars="[]|"
                relaxedQueryChars="[]|{}^\`&quot;&lt;&gt;"
                bindOnInit="false"
                maxHttpHeaderSize="8192"
                useBodyEncodingForURI="true"
                disableUploadTimeout="true" />
+    <Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
+               maxThreads="200" scheme="https" secure="true"
+               keystoreFile="/var/atlassian/application-data/confluence/keystore" keystorePass="Transfar123"
+               clientAuth="false" sslProtocol="TLS" sslVerifyClient="optional"
+         sslEnabledProtocols="TLSv1.2,TLSv1.1,SSLv2Hello"/>
 
     <Engine name="Standalone"
             defaultHost="localhost"
