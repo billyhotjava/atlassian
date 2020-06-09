@@ -1,15 +1,15 @@
 version: '3.8'
 services:
-  portainer:
-    image: portainer/portainer:latest
-    container_name: devops-portainer
-    restart: always
-    ports:
-        - 9095:9000
-    volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - atlassian
+  # portainer:
+  #   image: portainer/portainer:latest
+  #   container_name: devops-portainer
+  #   restart: always
+  #   ports:
+  #       - 9095:9000
+  #   volumes:
+  #       - /var/run/docker.sock:/var/run/docker.sock
+  #   networks:
+  #     - atlassian
 
   # jira:
   #   image: atlassian/jira-software:latest
