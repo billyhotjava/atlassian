@@ -1,28 +1,29 @@
 version: '3.8'
 services:
-  portainer:
-    image: portainer/portainer:latest
-    container_name: devops-portainer
+  jira:
+    build:
+      context: jira/
     restart: always
     ports:
-        - 9095:9000
+        - 8080:8080
+        - 8081:8081
+    depends_on:
+      - database
+    user: jira
     volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
+      - type: bind
+        source: ./jira/config/server.xml
+        target: /opt/atlassian/jira/conf/server.xml
+        read_only: true
+      #- ./jira/config/server.xml:/opt/atlassian/jira/conf/server.xml
+      - ./certs/cacerts:/var/atlassian/application-data/jira/cacerts
+      - ./jira/config/web.xml:/opt/atlassian/jira/conf/web.xml
+      - jira-data:/var/atlassian/application-data/jira
+    # environment: 
+    #   - 
     networks:
       - atlassian
-
-  # jira:
-  #   image: atlassian/jira-software:latest
-  #   restart: always
-  #   ports:
-  #       - 8089:8080
-  #   depends_on:
-  #     - database
-  #   volumes:
-  #     - jira-data:/var/atlassian/jira
-  #   networks:
-  #     - atlassian
-
+  
   confluence:
     build:
       context: confluence/
@@ -34,22 +35,15 @@ services:
       - database
     user: confluence
     volumes:
-      #- confluence-data:/var/atlassian/confluence
       - type: bind
         source: ./confluence/config/server.xml
         target: /opt/atlassian/confluence/conf/server.xml
         read_only: true
-      - type: bind
-        source: ./confluence/config/.keystore
-        target: /var/atlassian/application-data/confluence/.keystore
-        read_only: true
-      - type: bind
-        source: ./confluence/config/web.xml
-        target: /opt/atlassian/confluence/conf/web.xml
-        read_only: true
-      - type: volume
-        source: confluence-data
-        target: /var/atlassian/application-data/confluence
+      #- ./confluence/config/server.xml:/opt/atlassian/confluence/conf/server.xml:cached
+      - ./certs/cacerts:/var/atlassian/application-data/confluence/cacerts
+      - ./confluence/config/web.xml:/opt/atlassian/confluence/conf/web.xml
+      - ./confluence/config/web2.xml:/opt/atlassian/confluence/confluence/WEB-INF/web.xml
+      - confluence-data:/var/atlassian/application-data/confluence
     # environment: 
     #   - 
     networks:
@@ -84,7 +78,7 @@ services:
   #   - atlassian
 
 volumes:
-  #jira-data:
+  jira-data:
   confluence-data:
   db-data:
 networks:
