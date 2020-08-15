@@ -6,43 +6,46 @@ services:
     restart: always
     ports:
         - 8080:8080
-        - 8081:8081
+        #- 8081:8081
     depends_on:
       - database
-    user: jira
+    #user: jira
     volumes:
-      - type: bind
-        source: ./jira/config/server.xml
-        target: /opt/atlassian/jira/conf/server.xml
-        read_only: true
+      # - type: bind
+      #   source: ./jira/config/server.xml
+      #   target: /opt/atlassian/jira/conf/server.xml
+      #   read_only: true
       #- ./jira/config/server.xml:/opt/atlassian/jira/conf/server.xml
-      - ./certs/cacerts:/var/atlassian/application-data/jira/cacerts
-      - ./jira/config/web.xml:/opt/atlassian/jira/conf/web.xml
+      #- ./certs/cacerts:/var/atlassian/application-data/jira/cacerts
+      #- ./jira/config/web.xml:/opt/atlassian/jira/conf/web.xml
       - jira-data:/var/atlassian/application-data/jira
     # environment: 
     #   - 
     networks:
       - atlassian
-  
+    extra_hosts:
+      - "jira.yuzhicloud.com:127.0.0.1"
+      - "wiki.yuzhicloud.com:127.0.0.1"
+
   confluence:
     build:
       context: confluence/
     restart: always
     ports:
         - 8090:8090
-        - 8443:8443
+      #  - 8443:8443
     depends_on:
       - database
     user: confluence
     volumes:
-      - type: bind
-        source: ./confluence/config/server.xml
-        target: /opt/atlassian/confluence/conf/server.xml
-        read_only: true
+      # - type: bind
+      #   source: ./confluence/config/server.xml
+      #   target: /opt/atlassian/confluence/conf/server.xml
+      #   read_only: true
       #- ./confluence/config/server.xml:/opt/atlassian/confluence/conf/server.xml:cached
-      - ./certs/cacerts:/var/atlassian/application-data/confluence/cacerts
-      - ./confluence/config/web.xml:/opt/atlassian/confluence/conf/web.xml
-      - ./confluence/config/web2.xml:/opt/atlassian/confluence/confluence/WEB-INF/web.xml
+      # - ./certs/cacerts:/var/atlassian/application-data/confluence/cacerts
+      # - ./confluence/config/web.xml:/opt/atlassian/confluence/conf/web.xml
+      # - ./confluence/config/web2.xml:/opt/atlassian/confluence/confluence/WEB-INF/web.xml
       - confluence-data:/var/atlassian/application-data/confluence
     # environment: 
     #   - 
@@ -58,24 +61,27 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=confluencedb
+      - POSTGRES_USER=devops
       - POSTGRES_PASSWORD=verybigsecretrootpassword
-      - POSTGRES_DB=confluencedb
+      - POSTGRES_DB=wiki
     networks:
       - atlassian
-
-  # nginx:
-  #   image: nginx
-  #   restart: always
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #   - ./:/src
-  #   command: ./src/scripts/run_nginx.sh
-  #   environment:
-  #     - DOMAIN
-  #   networks:
-  #   - atlassian
+    extra_hosts:
+      - "jira.yuzhicloud.com:127.0.0.1"
+      - "wiki.yuzhicloud.com:127.0.0.1"
+  
+  nginx:
+    image: nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+    - ./:/src
+    command: ./src/scripts/run_nginx.sh
+    environment:
+      - $DOMAIN
+    networks:
+    - atlassian
 
 volumes:
   jira-data:
