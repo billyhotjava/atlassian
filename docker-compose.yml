@@ -22,7 +22,8 @@ services:
     environment: 
       - TZ=Asia/Shanghai
     networks:
-      - atlassian
+      localdevops: 
+        ipv4_address: 172.30.0.2
     extra_hosts:
       - "jira.yuzhicloud.com:127.0.0.1"
       - "wiki.yuzhicloud.com:127.0.0.1"
@@ -50,10 +51,15 @@ services:
     environment: 
       - TZ=Asia/Shanghai
     networks:
-      - atlassian
+      localdevops: 
+        ipv4_address: 172.30.0.3
+    extra_hosts:
+      - "jira.yuzhicloud.com:127.0.0.1"
+      - "wiki.yuzhicloud.com:127.0.0.1"
+      - "postgres.yuzhicloud.com:127.0.0.1"
 
   database:
-    image: postgres:12.2
+    image: postgres:12.4
     container_name: postgres
     restart: always
     ports:
@@ -65,45 +71,40 @@ services:
       - POSTGRES_PASSWORD=verybigsecretrootpassword
       - POSTGRES_DB=wiki
     networks:
-      - atlassian
+      localdevops: 
+        ipv4_address: 172.30.0.4
     extra_hosts:
       - "jira.yuzhicloud.com:127.0.0.1"
       - "wiki.yuzhicloud.com:127.0.0.1"
-  
-  # nginx:
-  #   image: nginx
-  #   restart: always
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #   - ./:/src
-  #   command: ./src/scripts/run_nginx.sh
-  #   environment:
-  #     - $DOMAIN
-  #   networks:
-  #   - atlassian
+      - "postgres.yuzhicloud.com:127.0.0.1" 
 
-    nginx:
-      image: nginx
-      restart: always
-      ports:
-        - "80:80"
-      links:
-        - jira
-        - confluence
-      volumes:
-        - ./:/src
-      command: ./src/scripts/run_nginx.sh
-      networks:
-        - atlassian
-      environment:
-        - DOMAIN
-        - TZ=Asia/Shanghai
+  nginx:
+    image: nginx
+    restart: always
+    ports:
+      - "80:80"
+    links:
+      - jira
+      - confluence
+    volumes:
+      - ./:/src
+    command: ./src/scripts/run_nginx.sh
+    networks:
+      localdevops: 
+        ipv4_address: 172.30.0.5
+    environment:
+      - DOMAIN
+      - TZ=Asia/Shanghai
 
 volumes:
   jira-data:
   confluence-data:
   db-data:
 networks:
-    atlassian:
-        driver: bridge
+  localdevops:
+    driver: bridge
+  ipam:
+    config:
+      - subnet: 172.30.0.0/16
+        gateway: 172.30.0.1
+      
