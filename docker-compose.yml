@@ -19,8 +19,8 @@ services:
       #- ./certs/cacerts:/var/atlassian/application-data/jira/cacerts
       #- ./jira/config/web.xml:/opt/atlassian/jira/conf/web.xml
       - jira-data:/var/atlassian/application-data/jira
-    # environment: 
-    #   - 
+    environment: 
+      - TZ=Asia/Shanghai
     networks:
       - atlassian
     extra_hosts:
@@ -47,8 +47,8 @@ services:
       # - ./confluence/config/web.xml:/opt/atlassian/confluence/conf/web.xml
       # - ./confluence/config/web2.xml:/opt/atlassian/confluence/confluence/WEB-INF/web.xml
       - confluence-data:/var/atlassian/application-data/confluence
-    # environment: 
-    #   - 
+    environment: 
+      - TZ=Asia/Shanghai
     networks:
       - atlassian
 
@@ -70,18 +70,35 @@ services:
       - "jira.yuzhicloud.com:127.0.0.1"
       - "wiki.yuzhicloud.com:127.0.0.1"
   
-  nginx:
-    image: nginx
-    restart: always
-    ports:
-      - "80:80"
-    volumes:
-    - ./:/src
-    command: ./src/scripts/run_nginx.sh
-    environment:
-      - $DOMAIN
-    networks:
-    - atlassian
+  # nginx:
+  #   image: nginx
+  #   restart: always
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #   - ./:/src
+  #   command: ./src/scripts/run_nginx.sh
+  #   environment:
+  #     - $DOMAIN
+  #   networks:
+  #   - atlassian
+
+    nginx:
+      image: nginx
+      restart: always
+      ports:
+        - "80:80"
+      links:
+        - jira
+        - confluence
+      volumes:
+        - ./:/src
+      command: ./src/scripts/run_nginx.sh
+      networks:
+        - atlassian
+      environment:
+        - DOMAIN
+        - TZ=Asia/Shanghai
 
 volumes:
   jira-data:
