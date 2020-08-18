@@ -76,7 +76,6 @@ services:
     extra_hosts:
       - "jira.yuzhicloud.com:127.0.0.1"
       - "wiki.yuzhicloud.com:127.0.0.1"
-      - "postgres.yuzhicloud.com:127.0.0.1" 
 
   nginx:
     image: nginx
@@ -95,6 +94,24 @@ services:
     environment:
       - DOMAIN
       - TZ=Asia/Shanghai
+  
+  # gitlab:
+  #   image: 'gitlab/gitlab-ee:latest'
+  #   container_name: devops_gitlab
+  #   restart: always
+  #   hostname: 'gitlab.yuzhicloud.com'
+  #   environment:
+  #     GITLAB_OMNIBUS_CONFIG: |
+  #       external_url 'https://gitlab.yuzhicloud.com'
+  #       # Add any other gitlab.rb configuration here, each on its own line
+  #   ports:
+  #     - '80:80'
+  #     - '443:443'
+  #     - '22:22'
+  #   volumes:
+  #     - '$GITLAB_HOME/config:/etc/gitlab'
+  #     - '$GITLAB_HOME/logs:/var/log/gitlab'
+  #     - '$GITLAB_HOME/data:/var/opt/gitlab'
 
 volumes:
   jira-data:
@@ -103,8 +120,8 @@ volumes:
 networks:
   localdevops:
     driver: bridge
-  ipam:
-    config:
-      - subnet: 172.30.0.0/16
-        gateway: 172.30.0.1
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
+
       
